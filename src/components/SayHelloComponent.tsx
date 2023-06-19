@@ -1,0 +1,57 @@
+import React from 'react';
+import { useSpeak } from '../hooks/useSpeak';
+import { SpeechSynthesisVoice } from 'easy-speech';
+import Select, { SingleValue } from 'react-select';
+import { useVoices } from '../hooks/useVoices';
+import { SpeechSynthesisVoiceData } from '../services/SpeechService';
+
+export const SayHelloComponent = () => {
+   const [text, setText] = React.useState<string>('Hi there! Are you ready?');
+   const [voiceData, setVoiceData] = React.useState<SpeechSynthesisVoiceData | undefined>(undefined);
+   const [availableVoices] = useVoices();
+   const [speak] = useSpeak({
+      onError: (error: Error) => {
+         console.error('Failed speak:', error);
+      },
+   });
+
+   const speech = () => {
+      if (voiceData) {
+         speak({ text, voice: voiceData.voice });
+      }
+   };
+
+   return (
+      <div style={{ margin: '20px', width: '200px' }}>
+         <Select
+            id="language"
+            value={voiceData}
+            options={availableVoices as any}
+            onChange={(value: SingleValue<SpeechSynthesisVoiceData>) => {
+               if (value && value.voice) {
+                  setVoiceData(value);
+               }
+            }}
+         />
+         <input
+            type="text"
+            value={text}
+            style={{ marginRight: '10px', width: '200px', marginTop: '4px', marginBottom: '4px', height: '28px' }}
+            onChange={(event) => {
+               setText(event?.target?.value || '');
+            }}
+         ></input>
+         <button
+            style={{ height: '28px' }}
+            disabled={!voiceData || !availableVoices || availableVoices.length === 0}
+            onClick={() => {
+               speech();
+            }}
+         >
+            &nbsp;&nbsp;Speak&nbsp;&nbsp;
+         </button>
+      </div>
+   );
+};
+
+export default SayHelloComponent;
