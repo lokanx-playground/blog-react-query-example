@@ -36,19 +36,19 @@ export const SayHelloComponent = () => {
          <input
             type="text"
             value={text}
-            style={{ marginRight: '10px', width: '200px', marginTop: '4px', marginBottom: '4px', height: '28px' }}
+            style={{ marginRight: '10px', width: '192px', marginTop: '4px', marginBottom: '4px', height: '28px' }}
             onChange={(event) => {
                setText(event?.target?.value || '');
             }}
          ></input>
          <button
-            style={{ height: '28px' }}
+            style={{ paddingLeft: '20px', paddingRight: '20px', paddingTop: '10px', paddingBottom: '10px' }}
             disabled={!voiceData || !availableVoices || availableVoices.length === 0}
             onClick={() => {
                speech();
             }}
          >
-            &nbsp;&nbsp;Speak&nbsp;&nbsp;
+            Speak
          </button>
       </div>
    );

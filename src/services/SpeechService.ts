@@ -35,7 +35,7 @@ const getVoices = (): SpeechSynthesisVoiceData[] => {
 
       if (voice.localService && voice.lang.startsWith('en-') || voice.lang.startsWith('sv-')) {
          console.log(voice);
-         voices.push({ label: `${voice.name} (${voice.lang})`, voice });
+         voices.push({ value: `${voice.voiceURI}`, label: `${voice.name} (${voice.lang})`, voice });
       }
    });
 
@@ -44,6 +44,7 @@ const getVoices = (): SpeechSynthesisVoiceData[] => {
 
 export interface SpeechSynthesisVoiceData {
    label: string;
+   value: string;
    voice: SpeechSynthesisVoice;
 }
 
