@@ -7,8 +7,9 @@ import { SpeechSynthesisVoiceData } from '../services/SpeechService';
 
 export const SayHelloComponent = () => {
    const [text, setText] = React.useState<string>('Hi there! Are you ready?');
-   const [voiceData, setVoiceData] = React.useState<SpeechSynthesisVoiceData | undefined>(undefined);
+   const [voiceData, setVoiceData] = React.useState<SpeechSynthesisVoiceData | undefined>();
    const [availableVoices] = useVoices();
+
    const [speak] = useSpeak({
       onError: (error: Error) => {
          console.error('Failed speak:', error);
