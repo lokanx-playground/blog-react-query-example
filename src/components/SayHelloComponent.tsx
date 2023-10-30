@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSpeak } from '../hooks/useSpeak';
-import { SpeechSynthesisVoice } from 'easy-speech';
 import Select, { SingleValue } from 'react-select';
 import { useVoices } from '../hooks/useVoices';
 import { SpeechSynthesisVoiceData } from '../services/SpeechService';
@@ -8,13 +7,19 @@ import { SpeechSynthesisVoiceData } from '../services/SpeechService';
 export const SayHelloComponent = () => {
    const [text, setText] = React.useState<string>('Hi there! Are you ready?');
    const [voiceData, setVoiceData] = React.useState<SpeechSynthesisVoiceData | undefined>();
-   const [availableVoices] = useVoices();
+   const [availableVoices, {isUseVoicesError, useVoicesError}] = useVoices();
 
    const [speak] = useSpeak({
       onError: (error: Error) => {
          console.error('Failed speak:', error);
       },
    });
+
+   React.useEffect(() => {
+      if (isUseVoicesError && useVoicesError) {
+         console.log("Failed detect voices", useVoicesError);
+      }
+   }, [isUseVoicesError, useVoicesError])
 
    const speech = () => {
       if (voiceData) {

@@ -1,4 +1,5 @@
 import EasySpeech, { SpeechSynthesisVoice } from 'easy-speech';
+import {v4 as UUID}  from 'uuid';
 
 export interface SpeakParams {
    text: string;
@@ -35,7 +36,8 @@ const getVoices = (): SpeechSynthesisVoiceData[] => {
 
       if (voice.localService && voice.lang.startsWith('en-') || voice.lang.startsWith('sv-')) {
          console.log(voice);
-         voices.push({ value: `${voice.voiceURI}`, label: `${voice.name} (${voice.lang})`, voice });
+         const id = UUID().toString();
+         voices.push({ value: id, label: `${voice.name} (${voice.lang})`, voice });
       }
    });
 

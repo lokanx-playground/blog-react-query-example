@@ -18,7 +18,7 @@ export const useSpeak = ({
    onSuccess = () => {},
    onError = () => {},
 }: UseSpeakParams) => {
-   const mutator = useMutation(performSpeak, {
+   const mutator = useMutation({mutationFn: performSpeak,
       onSuccess: () => {
          onSuccess();
       },
@@ -30,6 +30,6 @@ export const useSpeak = ({
 
    return [
       mutator.mutate,
-      { isSaving: mutator.isLoading, ...mutator },
+      { isSaving: mutator.isPending, ...mutator },
    ] as const;
 };
